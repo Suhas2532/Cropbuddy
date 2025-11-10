@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} 
+{% block body %}
+
+<div id="capture-area" class="container py-2 mx-auto my-50 h-10" style="margin: 9rem;">
+  <div class="row">
+    <div class="col-sm py-2 py-md-3">
+      <div class="card card-body" style="justify-content: center; background-color: blanchedalmond;">
+        <p class="text-center" style="color: black; font-size: 22px;">{{ prediction }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Download Button -->
+<div class="text-center mt-3">
+  <button id="downloadBtn" class="btn btn-primary">Download as Image</button>
+</div>
+
+<!-- JavaScript Section -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  document.getElementById('downloadBtn').addEventListener('click', function () {
+    const captureElement = document.getElementById('capture-area'); // Focused capture area
+    html2canvas(captureElement, {
+      scale: 2, // Higher resolution
+    }).then(function (canvas) {
+      const link = document.createElement('a');
+      link.download = 'disease-result.png'; // Adjust file name as needed
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  });
+</script>
+
+{% endblock %}
